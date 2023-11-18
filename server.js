@@ -3,7 +3,6 @@ const nodemailer = require("nodemailer");
 const bodyParser = require("body-parser");
 const cors = require("cors");
 const path = require("path");
-const serverless = require("serverless-http");
 const Router = express.Router;
 
 const app = express();
@@ -80,11 +79,9 @@ router.post("/send-email", (req, res) => {
   });
 });
 
-app.use("/.netlify/functions/api/", router);
+app.use("/api", router);
 
 // Start the server
 app.listen(port, () => {
   console.log(`Server is running on port ${port}`);
 });
-
-module.exports.handler = serverless(app);
