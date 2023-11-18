@@ -3,11 +3,16 @@ const nodemailer = require("nodemailer");
 const bodyParser = require("body-parser");
 const cors = require("cors");
 const path = require("path");
+const serverless = require("serverless-http");
+const Router = require("express").Router;
+
 const app = express();
 const port = process.env.PORT || 5000;
 
 // Middleware
 app.use(bodyParser.json());
+
+const router = Router();
 
 const allowedOrigins = [
   "http://localhost:5173",
@@ -36,12 +41,12 @@ app.set("view engine", "html");
 app.use(express.static(path.join(__dirname, "public")));
 
 // Api index
-app.get("/", (req, res) => {
+router.get("/", (req, res) => {
   res.render("index");
 });
 
 // Express route for sending emails
-app.post("/api/send-email", (req, res) => {
+router.post("/send-email", (req, res) => {
   const { name, email, message } = req.body;
 
   var transport = nodemailer.createTransport({
@@ -75,7 +80,11 @@ app.post("/api/send-email", (req, res) => {
   });
 });
 
+app.use("/.netlify/functions/api/", router);
+
 // Start the server
 app.listen(port, () => {
   console.log(`Server is running on port ${port}`);
 });
+
+module.exports.handler = serverless(app);
