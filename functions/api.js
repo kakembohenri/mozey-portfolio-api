@@ -4,7 +4,7 @@ const bodyParser = require("body-parser");
 const cors = require("cors");
 const path = require("path");
 const serverless = require("serverless-http");
-const Router = require("express").Router;
+const Router = express.Router;
 
 const app = express();
 const port = process.env.PORT || 5000;
