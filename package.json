@@ -5,8 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "nodemon server.js",
-    "build": "netlify deploy --prod"
+    "start": "nodemon server.js"
   },
   "author": "Kakekmbo Henry",
   "license": "MIT",
